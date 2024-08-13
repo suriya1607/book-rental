@@ -14,5 +14,21 @@ class Rental extends Model
         'book_id',
         'rented_on',
         'due_date',
+        'returned_on',
+        'overdue'
     ];
+    protected $dates = ['rented_on', 'due_date', 'returned_on'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the book that is rented.
+     */
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
 }

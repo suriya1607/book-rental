@@ -22,7 +22,7 @@ Route::post('/books', [BookController::class, 'store']);
 
 // Rentals
 Route::post('/rentals', [RentalController::class, 'store']);
-Route::patch('/rentals/{rental}/return', [RentalController::class, 'returnBook']);
+Route::post('/rentals/{rental}/return', [RentalController::class, 'returnBook']);
 Route::get('/rentals/history', [RentalController::class, 'history']);
 
 // Stats

@@ -26,16 +26,45 @@ class RentalController extends Controller
             'user_id' => 'required|exists:users,id',
             'book_id' => 'required|exists:books,id',
         ]);
-        // echo'<pre>';print_r(111);exit;
+        echo'<pre>';print_r($validated);exit;
+        if( $validated )
         $rental = Rental::create([
             'user_id' => $validated['user_id'],
             'book_id' => $validated['book_id'],
             'rented_on' => now(),
             'due_date' => now()->addWeeks(2),
         ]);
+        else{
+            return response()->json('Invalid User or Book ', 201);
+        }
 
         return response()->json($rental, 201);
     }
+
+    public function returnBook(Request $request, $id)
+    {
+        // Try to find the rental by ID
+        $rental = Rental::find($id);
+    
+        // If rental not found, return a 404 response
+        if (!$rental) {
+            return response()->json(['error' => 'Rental not found'], 404);
+        }
+    
+        // Update the returned_on field
+        $rental->update(['returned_on' => now()]);
+    
+        // Return the updated rental information
+        return response()->json($rental);
+    }
+
+    public function history(Request $request)
+    {
+        $rentals = Rental::with(['user', 'book'])->get();
+
+        return response()->json($rentals);
+    }
+
 
     /**
      * Display the specified resource.
