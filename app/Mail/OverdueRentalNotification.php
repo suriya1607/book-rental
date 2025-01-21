@@ -31,7 +31,7 @@ class OverdueRentalNotification extends Mailable
     }
 
     // /**
-    //  * Get the message envelope.
+    //  * Get the message envelope. shipment bugs
     //  */
     // public function envelope(): Envelope
     // {
